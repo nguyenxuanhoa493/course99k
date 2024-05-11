@@ -13,8 +13,8 @@
     <body class="bg-gray-100 p-4">
         <div class="max-w-100 mx-auto">
             <div class="max-w-100 mx-auto sticky top-0 bg-white pt-2">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-3xl font-bold mb-4">
+                <div class="md:flex flex-row justify-between items-center">
+                    <h1 class="md:text-3xl font-bold mb-4">
                         Khoá học đồng giá <span class="text-red-400">49k</span>,
                         <span class="text-red-500">99k</span>,<span
                             class="text-red-600"
@@ -26,15 +26,17 @@
                         <a
                             href="https://forms.gle/DdgFBGCTERsYBCHAA"
                             target="_blank"
-                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg md:text-xl text-xs px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             >Yêu cầu khoá học</a
                         >
                     </p>
                 </div>
-                <p>Bảo hành trọn đời</p>
+                <p class="md:text-2xl text-xl text-red-700 md:pt-1 pt-3">
+                    Bảo hành trọn đời
+                </p>
                 <div class="flex">
                     <div
-                        class="flex justify-between items-center mb-4 w-1/5 mr-8"
+                        class="md:flex flex-row justify-between items-center mb-4 w-1/5 mr-8"
                     >
                         <div class="contents">
                             <label class="inline-flex items-center">
@@ -142,7 +144,12 @@
 
                 // Use grid layout for results
                 const gridContainer = document.createElement("div");
-                gridContainer.classList.add("grid", "grid-cols-3", "gap-4");
+                gridContainer.classList.add(
+                    "grid",
+                    "grid-cols-1",
+                    "md:grid-cols-3",
+                    "gap-4"
+                );
 
                 products.forEach((product) => {
                     const gridItem = document.createElement("div");
@@ -165,7 +172,7 @@
                                                 product.name
                                             }</h5>
                                         </div>
-                                        <div class="flex justify-between items-center">
+                                        <div class="md:flex flex-row justify-between items-center">
                                         <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">${
                                             product.category
                                         }</span>
