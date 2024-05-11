@@ -38,10 +38,13 @@
         <script>
             // Function to load Google Sheets data
             async function loadSheetData() {
-                const url = `https://script.google.com/macros/s/AKfycbwRAEFY-atEwxP1saJDNCGw3Q-tqpx-YnkNMtPffGIygObhF9rR6EDl9rv16nGe-8B2/exec`;
+                const url = `https://script.google.com/macros/s/AKfycbwRVFtoQwqWdThEhVgKOCjZBdbMtaxLf2GgqbcldVepi2pkXs6ugQlTvClgUVpNpLs/exec`;
                 const response = await fetch(url);
                 const res = await response.json();
-                return res.data.map((entry) => ({
+                const sortedData = res.data.sort(
+                    (a, b) => b.price_sale - a.price_sale
+                );
+                return sortedData.map((entry) => ({
                     name: entry.course_name,
                     teacher_name: entry.teacher_name,
                     category: entry.category,
