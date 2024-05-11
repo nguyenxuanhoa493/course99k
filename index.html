@@ -38,7 +38,7 @@
         <script>
             // Function to load Google Sheets data
             async function loadSheetData() {
-                const url = `https://script.google.com/macros/s/AKfycbwRVFtoQwqWdThEhVgKOCjZBdbMtaxLf2GgqbcldVepi2pkXs6ugQlTvClgUVpNpLs/exec`;
+                const url = `https://script.google.com/macros/s/AKfycbwwXCZqbb4bMW7Kn9lfWUNQu8-pw2BoJH_yX3S-Ih4jQ12ma2BcGUhIEt1r1EDJHDSq/exec`;
                 const response = await fetch(url);
                 const res = await response.json();
                 const sortedData = res.data.sort(
@@ -51,6 +51,7 @@
                     link: entry.link,
                     thumbnail_src: entry.thumbnail_src,
                     price_sale: entry.price_sale,
+                    price: entry.price,
                     video_link: entry.video_link,
                 }));
             }
@@ -104,9 +105,14 @@
                 <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">${
                     product.category
                 }</span>
-                <span class="line-through text-lg font-bold"> ${Intl.NumberFormat(
-                    ["ban", "id"]
-                ).format(product.price_sale)}Đ<span>
+                <div>
+                    <span class="text-lg font-bold text-red"> ${Intl.NumberFormat(
+                        ["ban", "id"]
+                    ).format(product.price)}/<span>
+                    <span class="line-through text-lg font-bold"> ${Intl.NumberFormat(
+                        ["ban", "id"]
+                    ).format(product.price_sale)}Đ<span>    
+                </div>
                 </div>
                 <div class="flex items-center justify-between mt-3">
                     <span class="text-lg font-bold text-gray-900 dark:text-white">${
