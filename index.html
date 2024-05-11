@@ -12,25 +12,30 @@
     </head>
     <body class="bg-gray-100 p-4">
         <div class="max-w-100 mx-auto">
-            <h1 class="text-3xl font-bold mb-4">
-                Khoá học đồng giá 99k. Zalo: 0962369231
-            </h1>
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Enter product name..."
-                class="w-full p-2 border border-gray-300 rounded mb-4"
-            />
+            <div class="max-w-100 mx-auto sticky top-0 bg-white pt-2">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-3xl font-bold mb-4">
+                        Khoá học đồng giá <span class="text-red-500">99k</span>.
+                        Zalo: <span class="text-blue-500">0962369231</span>.
+                    </h1>
+                    <a
+                        href="https://forms.gle/DdgFBGCTERsYBCHAA"
+                        target="_blank"
+                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        >Yêu cầu khoá học</a
+                    >
+                </div>
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Enter product name..."
+                    class="w-full p-2 border border-gray-300 rounded mb-4"
+                />
+            </div>
             <div id="searchResults"></div>
         </div>
 
         <script>
-            // Replace 'YOUR_SPREADSHEET_ID' with your Google Sheets ID
-            const SPREADSHEET_ID =
-                "1WWvUxTbnNmQ6xxuZCryZJC8SxXd66G7kbp8Sq4p37oU";
-            // Replace 'YOUR_SHEET_NAME' with the name of your sheet
-            const SHEET_NAME = "Data";
-
             // Function to load Google Sheets data
             async function loadSheetData() {
                 const url = `https://script.google.com/macros/s/AKfycbxmP9_iBmJ5CivyO5qoIoje38qUq2epQckmab6TglN2akBszpLL7-ECLbL6r4RmGAav/exec`;
@@ -88,7 +93,7 @@
                 <div class="flex-grow">
                     <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white mt-2">${product.name}</h5>
                 </div>
-                <div class="flex justify-between">
+                <div class="flex justify-between items-center">
                 <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">${product.category}</span>
                 <span class="line-through text-lg font-bold"> ${product.price_sale}Đ<span>
                 </div>
