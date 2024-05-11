@@ -3,7 +3,116 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Course 99k</title>
+        <title>Product Search</title>
+        <!-- Include Tailwind CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
     </head>
-    <body></body>
+    <body class="bg-gray-100 p-4">
+        <div class="max-w-100 mx-auto">
+            <h1 class="text-3xl font-bold mb-4">Product Search</h1>
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Enter product name..."
+                class="w-full p-2 border border-gray-300 rounded mb-4"
+            />
+            <div id="searchResults"></div>
+        </div>
+
+        <script>
+            // Replace 'YOUR_SPREADSHEET_ID' with your Google Sheets ID
+            const SPREADSHEET_ID =
+                "1WWvUxTbnNmQ6xxuZCryZJC8SxXd66G7kbp8Sq4p37oU";
+            // Replace 'YOUR_SHEET_NAME' with the name of your sheet
+            const SHEET_NAME = "Data";
+
+            // Function to load Google Sheets data
+            async function loadSheetData() {
+                const url = `https://script.google.com/macros/s/AKfycbxmP9_iBmJ5CivyO5qoIoje38qUq2epQckmab6TglN2akBszpLL7-ECLbL6r4RmGAav/exec`;
+                const response = await fetch(url);
+                const res = await response.json();
+                return res.data.map((entry) => ({
+                    name: entry.course_name,
+                    teacher_name: entry.teacher_name,
+                    category: entry.category,
+                    link: entry.link,
+                    thumbnail_src: entry.thumbnail_src,
+                    price_sale: entry.price_sale,
+                    video_link: entry.video_link,
+                }));
+            }
+
+            // Function to search products
+            async function searchProducts(query) {
+                const sheetData = await loadSheetData();
+                const results = sheetData.filter((product) =>
+                    product.name.toLowerCase().includes(query.toLowerCase())
+                );
+                return results;
+            }
+            async function displayResults(query) {
+                const resultsContainer =
+                    document.getElementById("searchResults");
+                resultsContainer.innerHTML = "";
+
+                const products = await searchProducts(query);
+                if (products.length === 0) {
+                    resultsContainer.innerHTML =
+                        '<p class="text-red-500">No products found.</p>';
+                    return;
+                }
+
+                // Use grid layout for results
+                const gridContainer = document.createElement("div");
+                gridContainer.classList.add("grid", "grid-cols-3", "gap-4");
+
+                products.forEach((product) => {
+                    const gridItem = document.createElement("div");
+                    gridItem.classList.add(
+                        "bg-white",
+                        "border",
+                        "border-gray-200",
+                        "rounded-lg",
+                        "shadow",
+                        "p-4",
+                        "flex",
+                        "flex-col"
+                    );
+                    gridItem.innerHTML = `
+                <img class="rounded-t-lg mx-auto" src="${product.thumbnail_src}" alt="product image" style="width: 100%; height: auto;" />
+                <div class="flex-grow">
+                    <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white mt-2">${product.name}</h5>
+                </div>
+                <div class="flex justify-between">
+                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">${product.category}</span>
+                <span class="line-through text-sm"> ${product.price_sale}Đ<span>
+                </div>
+                <div class="flex items-center justify-between mt-3">
+                    <span class="text-lg font-bold text-gray-900 dark:text-white">${product.teacher_name}</span>
+                    <a href="${product.video_link}" target="_blank" class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xem video </a>
+                    <a href="${product.link}"target="_blank" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xem chi tiết</a>
+                </div>
+            `;
+                    gridContainer.appendChild(gridItem);
+                });
+
+                resultsContainer.appendChild(gridContainer);
+            }
+
+            // Event listener for search input
+            document
+                .getElementById("searchInput")
+                .addEventListener("input", function () {
+                    displayResults(this.value);
+                });
+
+            // Call displayResults on page load with an empty string to show initial results
+            window.onload = function () {
+                displayResults(""); // You can replace "" with a default search term if desired
+            };
+        </script>
+    </body>
 </html>
